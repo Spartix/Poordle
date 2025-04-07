@@ -96,15 +96,16 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: "Starter Base",
+            title: "PoorDle",
             headerRight: () => <ThemeToggle />,
+            headerTitleAlign: "center",
           }}
         />
         <Stack.Screen
           name="(tabs)/index"
           options={{
             headerShown: true,
-            headerTitle: "PauvreDle",
+            headerTitle: "PoorDle",
             headerTitleAlign: "center",
             headerRight: () => <ThemeToggle />,
           }}
@@ -113,7 +114,7 @@ export default function RootLayout() {
           name="login/index"
           options={{
             headerShown: true,
-            headerTitle: "PauvreDle Login",
+            headerTitle: "PoorDle Login",
             headerRight: () => <ThemeToggle />,
           }}
         />
