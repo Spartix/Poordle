@@ -1,4 +1,5 @@
 import {
+  Evaluations,
   ReleveNoteResponse,
   Ressource,
 } from "../interfaces/ReleveNoteResponse";
@@ -21,5 +22,28 @@ export class ReleveManager {
 
   public getRessourceNames(): string[] {
     return Object.keys(this.releveDeNote.relevé.ressources);
+  }
+  public static getMoyenneFromRessource(
+    ressourceName: Ressource[string]
+  ): number {
+    let moyenne = 0;
+    let coef = 0;
+    ressourceName.evaluations.forEach((evaluation) => {
+      console.log(evaluation.note.value);
+      if (evaluation.note.value !== "~") {
+        moyenne +=
+          parseFloat(evaluation.note.value) * parseFloat(evaluation.coef);
+        coef += parseFloat(evaluation.coef);
+      }
+    });
+    return moyenne / coef || 0;
+  }
+  public static getEvaluationFromRessource(
+    ressourceName: Ressource[string]
+  ): Evaluations {
+    return ressourceName.evaluations;
+  }
+  public getGroupe(): string {
+    return this.releveDeNote.relevé.semestre.groupes[0].group_name;
   }
 }

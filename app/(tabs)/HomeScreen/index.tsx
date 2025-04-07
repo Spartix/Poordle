@@ -12,7 +12,11 @@ import { Text } from "~/components/ui/text";
 import { useEffect, useState } from "react";
 import { Event } from "~/ressources/interfaces/Event";
 import { Progress } from "~/components/ui/progress";
+import { useContext } from "react";
+import { ReleveContext } from "../index"; // adapte le chemin
+
 function EventBlock() {
+  const manager = useContext(ReleveContext);
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
@@ -28,27 +32,34 @@ function EventBlock() {
 
   return (
     <View>
-      {events.map((e: Event) => (
-        <Card key={e.id}>
-          <CardHeader>
-            <CardTitle>{e.date}</CardTitle>
-            <CardDescription>{e.nom}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button
-              variant={"secondary"}
-              onPress={() => {
-                // open browser with url
-                Linking.openURL(
-                  decodeURIComponent(e.lien.replace(/&amp;/g, "&"))
-                );
-              }}
-            >
-              <Text>Remettre</Text>
-            </Button>
-          </CardContent>
-        </Card>
-      ))}
+      {manager &&
+        events
+          .filter(
+            (elt) =>
+              elt.nom.includes(manager.getGroupe()) ||
+              !elt.nom.toLocaleLowerCase().includes("groupe")
+          )
+          .map((e: Event) => (
+            <Card key={e.id}>
+              <CardHeader>
+                <CardTitle>{e.date}</CardTitle>
+                <CardDescription>{e.nom}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button
+                  variant={"secondary"}
+                  onPress={() => {
+                    // open browser with url
+                    Linking.openURL(
+                      decodeURIComponent(e.lien.replace(/&amp;/g, "&"))
+                    );
+                  }}
+                >
+                  <Text>Remettre</Text>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
     </View>
   );
 }

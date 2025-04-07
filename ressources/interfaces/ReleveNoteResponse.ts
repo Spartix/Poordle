@@ -118,7 +118,7 @@ type Note = {
   max: string;
   moy: string;
 };
-type Evaluations = {
+export type Evaluations = {
   id: number;
   coef: string;
   description: string;
@@ -169,7 +169,7 @@ type Rang = {
   groupes: {};
 };
 type ReleveSemestre = {
-  etapes: [any];
+  etapes: any[];
   date_debut: string;
   date_fin: string;
   annee_universitaire: string;
@@ -194,8 +194,8 @@ type Releve = {
   ressources: Ressource;
   saes: SAE;
   ues_capitalisees: any;
-  semestre: any;
-  ues: any;
+  semestre: ReleveSemestre;
+  ues: UES;
 };
 type MoyenneUE = Note & {
   rang: string;
