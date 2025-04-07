@@ -18,7 +18,7 @@ function EventBlock() {
   useEffect(() => {
     async function fetchEvents() {
       const event = await AccountManager.getEvent();
-      console.log("Event: ", event);
+      //console.log("Event: ", event);
       if (event) {
         setEvents(event);
       }

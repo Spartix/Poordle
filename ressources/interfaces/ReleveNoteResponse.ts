@@ -125,7 +125,7 @@ type Evaluations = {
   evaluation_type: number;
   note: Note;
 }[];
-type Ressource = {
+export type Ressource = {
   [key: string]: {
     id: number;
     titre: string;

@@ -10,6 +10,7 @@ export class AccountManager {
     // Simulate a login process
     if (await this.isLoggedIn()) return Promise.resolve(true);
     const csrfToken = await this.getCSRFToken();
+    console.log("CSRF token: ", csrfToken);
     if (!csrfToken) {
       console.error("CSRF token not found");
       return Promise.reject(new Error("CSRF token not found"));
@@ -50,6 +51,7 @@ export class AccountManager {
         },
       }
     );
+    console.log("isLoggedIn: ", response.url);
     return Promise.resolve(
       response.url.includes("https://moodle.univ-lille.fr/my")
     );
