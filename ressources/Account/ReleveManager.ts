@@ -3,6 +3,7 @@ import {
   Evaluations,
   ReleveNoteResponse,
   Ressource,
+  TotauxAbsences,
 } from "../interfaces/ReleveNoteResponse";
 
 export class ReleveManager {
@@ -65,5 +66,8 @@ export class ReleveManager {
     const base64 = encode(arrayBuffer);
     //console.log("Base64 conversion done");
     return "data:image/jpeg;base64," + base64;
+  }
+  public get totalAbs(): TotauxAbsences {
+    return this.releveDeNote.totauxAbsences;
   }
 }

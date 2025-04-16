@@ -253,7 +253,7 @@ type AbsenceDetails = {
   compte: number;
 };
 
-type TotauxAbsences = {
+export type TotauxAbsences = {
   present: AbsenceDetails;
   retard: {
     journee: number;

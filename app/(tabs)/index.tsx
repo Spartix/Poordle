@@ -6,6 +6,7 @@ import { ReleveManager } from "~/ressources/Account/ReleveManager";
 import { AccountManager } from "~/ressources/Account/AccountManager";
 import { Calendar, EllipsisVertical, FileText } from "lucide-react-native";
 import { ReleveContext } from "../_layout";
+import AbsencesScreen from "./Absences/Absences";
 const Tab = createBottomTabNavigator();
 
 export default function Tabs() {
@@ -40,6 +41,15 @@ export default function Tabs() {
         options={{
           tabBarIcon: ({ color }: { color: string }) => (
             <FileText size={24} color={color} strokeWidth={1} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Absences"
+        component={AbsencesScreen}
+        options={{
+          tabBarIcon: ({ color }: { color: string }) => (
+            <EllipsisVertical size={24} color={color} strokeWidth={1} />
           ),
         }}
       />
