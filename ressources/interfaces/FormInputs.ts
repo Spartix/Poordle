@@ -1,4 +1,5 @@
 interface Input {
+  secureTextEntry?: boolean;
   name: string;
   placeholder?: string;
   value?: string;

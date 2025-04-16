@@ -25,12 +25,14 @@ import { AccountManager } from "~/ressources/Account/AccountManager";
 import { ReleveManager } from "~/ressources/Account/ReleveManager";
 import { Ressource } from "~/ressources/interfaces/ReleveNoteResponse";
 import { useContext } from "react";
-import { ReleveContext } from "../index"; // adapte le chemin
-
+import { ReleveContext } from "../../_layout"; // adapte le chemin
 
 export default function BulletinScreen() {
   //const [manager, setManager] = useState<ReleveManager | null>(null);
-  const manager = useContext(ReleveContext)
+  const context = useContext(ReleveContext);
+  if (!context) return null;
+
+  const { manager } = context;
   return (
     <ScrollView>
       <Card className="m-2 rounded-lg">

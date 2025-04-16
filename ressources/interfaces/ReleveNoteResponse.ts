@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 type Config = {
   passerelle_version: string;
   histogramme: boolean;

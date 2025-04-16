@@ -25,6 +25,7 @@ export default function Login() {
         name: "mot de passe",
         value: "",
         placeholder: "********",
+        secureTextEntry: true,
       },
     ],
   };

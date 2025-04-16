@@ -10,7 +10,7 @@ export class AccountManager {
     // Simulate a login process
     if (await this.isLoggedIn()) return Promise.resolve(true);
     const csrfToken = await this.getCSRFToken();
-    console.log("CSRF token: ", csrfToken);
+    //console.log("CSRF token: ", csrfToken);
     if (!csrfToken) {
       console.error("CSRF token not found");
       return Promise.reject(new Error("CSRF token not found"));
@@ -34,7 +34,7 @@ export class AccountManager {
     // if (!isLogged.includes("https://moodle.univ-lille.fr/my/"))
     //   return Promise.resolve(false);
     // console.log("Login successful");
-    console.log(response.headers);
+    //console.log(response.headers);
     return Promise.resolve(this.isLoggedIn());
   }
   public static logout(): Promise<void> {
@@ -51,7 +51,7 @@ export class AccountManager {
         },
       }
     );
-    console.log("isLoggedIn: ", response.url);
+    //console.log("isLoggedIn: ", response.url);
     return Promise.resolve(
       response.url.includes("https://moodle.univ-lille.fr/my")
     );
@@ -68,7 +68,7 @@ export class AccountManager {
       }
     );
     const html = await response.text();
-    console.log(AsyncStorage.getAllKeys());
+    //console.log(AsyncStorage.getAllKeys());
     const csrfTokenMatch = html
       .split(`<input type="hidden" name="execution" value="`)[1]
       ?.split(`"`)[0];

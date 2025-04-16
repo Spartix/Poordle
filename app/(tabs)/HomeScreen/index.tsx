@@ -13,10 +13,14 @@ import { useEffect, useState } from "react";
 import { Event } from "~/ressources/interfaces/Event";
 import { Progress } from "~/components/ui/progress";
 import { useContext } from "react";
-import { ReleveContext } from "../index"; // adapte le chemin
+import { ReleveContext } from "../../_layout"; // adapte le chemin
 
 function EventBlock() {
-  const manager = useContext(ReleveContext);
+  const context = useContext(ReleveContext);
+  if (!context) return null;
+
+  const { manager } = context;
+
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {

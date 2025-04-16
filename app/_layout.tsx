@@ -16,6 +16,10 @@ import { ThemeToggle } from "~/components/ThemeToggle";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { AlertTriangle, CheckSquare, Info } from "lucide-react-native";
+import { ReleveManager } from "~/ressources/Account/ReleveManager";
+import { setShouldAnimateExitingForTag } from "react-native-reanimated/lib/typescript/core";
+import { Avatar, AvatarImage } from "~/components/ui/avatar";
+import { Button } from "~/components/ui/button";
 type Theme = typeof ThemeProvider;
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -30,12 +34,29 @@ export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from "expo-router";
-
+export const ReleveContext = React.createContext<
+  | {
+      manager: ReleveManager | undefined;
+      setManager: React.Dispatch<
+        React.SetStateAction<ReleveManager | undefined>
+      >;
+    }
+  | undefined
+>(undefined);
 export default function RootLayout() {
   const hasMounted = React.useRef(false);
+  const [manager, setManager] = React.useState<ReleveManager | undefined>();
   const { colorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
-
+  const [avatar, setAvatar] = React.useState<string | null>(null);
+  React.useEffect(() => {
+    const fetchAvatar = async () => {
+      const avatar = await manager?.getAvatar();
+      avatar && setAvatar(avatar);
+      //console.log("Avatar: ", avatar);
+    };
+    fetchAvatar();
+  }, [manager]);
   useIsomorphicLayoutEffect(() => {
     if (hasMounted.current) {
       return;
@@ -90,38 +111,62 @@ export default function RootLayout() {
     ),
   };
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-      <Stack>
-        <Stack.Screen
-          name="index"
-          options={{
-            title: "PoorDle",
-            headerRight: () => <ThemeToggle />,
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="(tabs)/index"
-          options={{
-            headerShown: true,
-            headerTitle: "PoorDle",
-            headerTitleAlign: "center",
-            headerRight: () => <ThemeToggle />,
-          }}
-        />
-        <Stack.Screen
-          name="login/index"
-          options={{
-            headerShown: true,
-            headerTitle: "PoorDle Login",
-            headerRight: () => <ThemeToggle />,
-          }}
-        />
-      </Stack>
-      <Toast config={TOAST_CONFIG} />
-      <PortalHost />
-    </ThemeProvider>
+    <ReleveContext.Provider value={{ manager, setManager }}>
+      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+        <Stack>
+          <Stack.Screen
+            name="index"
+            options={{
+              title: "PoorDle",
+              headerRight: () => <ThemeToggle />,
+              headerTitleAlign: "center",
+            }}
+          />
+          <Stack.Screen
+            name="(tabs)/index"
+            options={{
+              headerShown: true,
+              headerTitle: "PoorDle",
+              headerTitleAlign: "center",
+              headerRight: () => (
+                <>
+                  {/* <Button
+                    onPressIn={async () => {
+                      console.log(await manager?.getAvatar());
+                    }}
+                  ></Button> */}
+                  <Avatar alt="avatar" className="mr-2">
+                    {avatar && (
+                      <AvatarImage
+                        source={{
+                          uri: avatar,
+                        }}
+                        onError={(error) => {
+                          console.log("Image load error:", error.nativeEvent);
+                        }}
+                        onLoad={() => console.log("Image loaded successfully")}
+                      />
+                    )}
+                  </Avatar>
+                  <ThemeToggle />
+                </>
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="login/index"
+            options={{
+              headerShown: true,
+              headerTitle: "PoorDle Login",
+              headerRight: () => <ThemeToggle />,
+            }}
+          />
+        </Stack>
+        <Toast config={TOAST_CONFIG} />
+        <PortalHost />
+      </ThemeProvider>
+    </ReleveContext.Provider>
   );
 }
 

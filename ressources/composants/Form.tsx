@@ -38,6 +38,7 @@ export default function Form({
             <Input
               className="w-full"
               placeholder={input.placeholder}
+              secureTextEntry={input.secureTextEntry}
               onChangeText={(text) => {
                 const newInputs = { ...formInputs };
                 newInputs.inputs[index].value = text;
