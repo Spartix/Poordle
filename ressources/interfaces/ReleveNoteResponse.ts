@@ -231,7 +231,7 @@ type UES = {
     };
   };
 };
-type Absences = {
+export type Absences = {
   [key: string]: [
     {
       idAbs: number;

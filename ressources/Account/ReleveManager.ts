@@ -1,5 +1,6 @@
 import { encode } from "base64-arraybuffer";
 import {
+  Absences,
   Evaluations,
   ReleveNoteResponse,
   Ressource,
@@ -69,5 +70,20 @@ export class ReleveManager {
   }
   public get totalAbs(): TotauxAbsences {
     return this.releveDeNote.totauxAbsences;
+  }
+  public getAbsences(): Absences[string][] {
+    let absDate: Absences[string][] = [];
+    Object.keys(this.releveDeNote.absences).forEach((key) => {
+      if (
+        this.releveDeNote.absences[key].some(
+          (a: { statut: "present" | "absent" | "retard" }) =>
+            a.statut === "absent"
+        )
+      ) {
+        absDate.push(this.releveDeNote.absences[key]);
+      }
+    });
+    console.log(absDate);
+    return absDate;
   }
 }
