@@ -203,7 +203,7 @@ type MoyenneUE = Note & {
   rang: string;
   total: number;
 };
-type UES = {
+export type UES = {
   [key: string]: {
     id: number;
     titre: string;
@@ -279,7 +279,6 @@ export interface ReleveNoteResponse {
   auth: Auth;
   semestres: Semestres;
   relevé: Releve;
-  ues: UES;
   absences: Absences;
   totauxAbsences: TotauxAbsences;
 }

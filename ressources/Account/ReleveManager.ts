@@ -5,6 +5,7 @@ import {
   ReleveNoteResponse,
   Ressource,
   TotauxAbsences,
+  UES,
 } from "../interfaces/ReleveNoteResponse";
 
 export class ReleveManager {
@@ -85,5 +86,8 @@ export class ReleveManager {
     });
     console.log(absDate);
     return absDate;
+  }
+  public get ues(): UES {
+    return this.releveDeNote.relevé.ues;
   }
 }

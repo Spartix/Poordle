@@ -26,6 +26,7 @@ import { ReleveManager } from "~/ressources/Account/ReleveManager";
 import { Ressource } from "~/ressources/interfaces/ReleveNoteResponse";
 import { useContext } from "react";
 import { ReleveContext } from "../../_layout"; // adapte le chemin
+import UesScreen from "./Ues";
 
 export default function BulletinScreen() {
   //const [manager, setManager] = useState<ReleveManager | null>(null);
@@ -54,6 +55,18 @@ export default function BulletinScreen() {
                 );
               })}
           </ScrollView>
+        </CardContent>
+      </Card>
+      <Card className="m-2 rounded-lg">
+        <CardHeader>
+          <CardTitle>UES</CardTitle>
+          <CardDescription>
+            La moyenne des ressources dans une UE dépend des poids donnés aux
+            évaluations.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <UesScreen />
         </CardContent>
       </Card>
     </ScrollView>
