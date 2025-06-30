@@ -7,15 +7,14 @@ export class AccountManager {
     username: string,
     password: string
   ): Promise<boolean> {
-    // Simulate a login process
     if (await this.isLoggedIn()) return Promise.resolve(true);
     const csrfToken = await this.getCSRFToken();
-    //console.log("CSRF token: ", csrfToken);
+
     if (!csrfToken) {
       console.error("CSRF token not found");
       return Promise.reject(new Error("CSRF token not found"));
     }
-    // console.log("CSRF token: ", csrfToken);
+
     const response = await fetch(
       "https://cas.univ-lille.fr/login?service=https%3A%2F%2Fmoodle.univ-lille.fr%2Flogin%2Findex.php%3FauthCAS%3DCAS",
       {
@@ -28,13 +27,6 @@ export class AccountManager {
         body: `username=${username}&password=${password}&execution=${csrfToken}&_eventId=submit`,
       }
     );
-    // console.log("caca de noir");
-    // const isLogged = response.url;
-    // console.log(isLogged);
-    // if (!isLogged.includes("https://moodle.univ-lille.fr/my/"))
-    //   return Promise.resolve(false);
-    // console.log("Login successful");
-    //console.log(response.headers);
     return Promise.resolve(this.isLoggedIn());
   }
   public static logout(): Promise<void> {
@@ -51,7 +43,6 @@ export class AccountManager {
         },
       }
     );
-    //console.log("isLoggedIn: ", response.url);
     return Promise.resolve(
       response.url.includes("https://moodle.univ-lille.fr/my")
     );
